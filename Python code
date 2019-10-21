@@ -1,0 +1,55 @@
+import pandas as pd      # these are all the import we may need 
+%matplotlib inline
+import numpy as np              
+import pandas as pd
+from sklearn import preprocessing as prep
+from pandas.plotting import scatter_matrix
+from matplotlib import pyplot as plt
+
+
+tp = pd.read_csv('Turnout by Party 2019 Primary.csv')  # this call the csv file we are using
+
+df = pd.read_csv('Turnout by Party 2019 Primary.csv')  # this calls the file to read first 5 rows and columns
+df.head()
+
+scatter_matrix(df,                                     # Make a scatter matrix of all columns
+               figsize=(20, 20),                       # Set plot size
+               diagonal='kde')                         # Show distribution estimates on diagonal
+     
+
+df_num = df[['Total Reg Voters', 'Democratic Reg Voters', 'Republican Reg Voters', 'Total Ballots Cast', 'Democratic Ballots Cast', 'Republican Ballots Cast']]  #, 'Total Voter Turnout (%)	Democratic Voter Turnout (%)	Republican Voter Turnout (%)
+df_num.head()
+
+
+(this is output from line of code 20,21)
+  Total Reg Voters	Democratic Reg Voters	Republican Reg Voters	Total Ballots Cast	Democratic Ballots Cast	Republican Ballots Cast
+0	            1369	                  527	                  685	               229                       98	                    131
+1	             885	                  475	                  281	               176	                    125	                     51
+2	             607 	                  298	                  194	               135	                    103	                     32
+3	             872	                  452	                  284	               186	                    135	                     51
+4             1122	                  680	                  253	               118	                     90	                     28
+
+
+df_num.corr()                                         # this runs the correlation of df_num
+
+
+(this is output for df_num.corr)
+Total Reg Voters	Democratic Reg Voters                # as we can see, we only have a correlation between Dems and total, which is not right
+Total Reg Voters	1.00000	0.86581                      # we are going to have to rethink our columns
+Democratic Reg Voters	0.86581	1.00000
+
+df_num.mean()
+
+(output)
+Total Reg Voters         720.688351                   # as we can see these are the means of the two vairables 
+Democratic Reg Voters    417.515129
+dtype: float64
+
+df_num.plot.scatter(x="Total Reg Voters",y="Democratic Reg Voters")  # scatterplot of those two
+
+df_num["Total Reg Voters"].hist(bins=50)              # histogram of total voters 
+
+df_num["Democratic Reg Voters"].hist(bins=50)         # histogram of dem reg voters
+
+This is as far as i have gotten and as you can see, its only pulling two values. Now the code runs perfict if you run it in python but 
+we really need to organize these columns or maybe split each voting area, such as Avalon as its on dataframe. What do you guys think?
